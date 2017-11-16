@@ -22,15 +22,15 @@ module.exports = (robot) => {
   // Your code here
   console.log('Yay, the app was loaded!')
 
-  robot.on('issues.opened', async context => {
-    console.log(context.github.issues);
-    const config = await getConfig(context);
+  // robot.on('issues.opened', async context => {
+  //   console.log(context.github.issues);
+  //   const config = await getConfig(context);
 
-    context.github.issues.createComment(context.issue({body: 'test'}));
-  });
+  //   context.github.issues.createComment(context.issue({body: 'test'}));
+  // });
 
   robot.on('issue_comment', async context => {
-    console.log(context.payload);
+    // console.log(context.payload);
 
     if (context.payload.comment.user.type === 'Bot') {
       return;
