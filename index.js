@@ -51,9 +51,23 @@ module.exports = (robot) => {
     switch (command) {
       case '/label':
         console.log('labeling issue');
-        context.github.issues.edit(context.issue({
-          labels: args
-        }));
+        const [operation, ...labels] = args;
+        switch(operation) {
+          case 'add':
+            context.github.issues.addLabels(context.issue({
+              labels: labels
+            }));
+            break;
+          case 'remove':
+            context.github.issues.removeLabels(context.issue({
+              labels: labels
+            }));
+            break;
+          default:
+            context.github.issues.createComment(context.issue({
+              body: `Oh, snap! I couldn't understand your request.`
+            }));
+        }
         break;
 
       case '/close':
