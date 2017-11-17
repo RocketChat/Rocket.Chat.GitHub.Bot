@@ -54,14 +54,10 @@ module.exports = (robot) => {
         const [operation, ...labels] = args;
         switch(operation) {
           case 'add':
-            context.github.issues.addLabels(context.issue({
-              labels: labels
-            }));
+            context.github.issues.addLabels(context.issue({labels}));
             break;
           case 'remove':
-            context.github.issues.removeLabels(context.issue({
-              labels: labels
-            }));
+            context.github.issues.removeLabels(context.issue({labels}));
             break;
           default:
             context.github.issues.createComment(context.issue({
