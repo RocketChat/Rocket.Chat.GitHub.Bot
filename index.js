@@ -57,7 +57,8 @@ module.exports = (robot) => {
             context.github.issues.addLabels(context.issue({labels}));
             break;
           case 'remove':
-            context.github.issues.removeLabels(context.issue({labels}));
+          const [name] = labels;
+            context.github.issues.removeLabel(context.issue({name}));
             break;
           default:
             context.github.issues.createComment(context.issue({
