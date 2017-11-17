@@ -36,8 +36,10 @@ module.exports = (robot) => {
       return;
     }
 
-    const command = context.payload.comment.body.trim();
-    console.log('command:', command);
+    const tokens = context.payload.comment.body.split(' ');
+    const [command, ...args] = tokens;
+
+    console.log('command:', command, args);
 
     if (!await whiteListedUser(context)) {
       context.github.issues.createComment(context.issue({
@@ -47,6 +49,13 @@ module.exports = (robot) => {
     }
 
     switch (command) {
+      case '/label':
+        console.log('labeling issue');
+        context.github.issues.edit(context.issue({
+          labels: args
+        }));
+        break;
+
       case '/close':
         console.log('closing issue');
         context.github.issues.edit(context.issue({
