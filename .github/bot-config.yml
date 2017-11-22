@@ -1,3 +1,11 @@
 whitelist:
-  - ggazzo
-  - theorenck
+  users:
+    - ggazzo
+    - theorenck
+  labels:
+    - duplicate
+    - enhancement
+    - "help wanted"
+    - invalid
+    - question
+    - wontfix

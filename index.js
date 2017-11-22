@@ -11,11 +11,23 @@ async function whiteListedUser(context) {
     return true;
   }
 
-  if (config.whitelist.includes(context.payload.comment.user.login)) {
+  if (config.whitelist.users.includes(context.payload.comment.user.login)) {
     return true;
   }
 
   return false;
+}
+
+function parse(command) {
+  const pattern = /(".*?"|[^"\s]+)(?=\s*|\s*$)/g;
+
+  let match;
+  let parsed = [];
+
+  while (match = pattern.exec(command)) {
+    parsed = [...parsed, match[0].replace(/"/g,'')];
+  }
+  return parsed;
 }
 
 module.exports = (robot) => {
@@ -36,7 +48,7 @@ module.exports = (robot) => {
       return;
     }
 
-    const tokens = context.payload.comment.body.split(' ');
+    const tokens = parse(context.payload.comment.body);
     const [command, ...args] = tokens;
 
     console.log('command:', command, args);
