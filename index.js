@@ -1,7 +1,19 @@
 async function getConfig(context) {
   return await context.config('bot-config.yml', {
-    whitelist: []
+    bot: {
+      name: '@bot'
+    },
+    whitelist: {
+      users: [],
+      labels: []
+    }
   });
+}
+
+function isWhiteListedLabel(label) {
+  return !!config.whitelist.labels.find((e) => {
+    return e.toUpperCase() === label.toUpperCase();
+  })
 }
 
 async function whiteListedUser(context) {
@@ -31,7 +43,7 @@ function parse(command) {
 }
 
 module.exports = (robot) => {
-  // Your code here
+
   console.log('Yay, the app was loaded!')
 
   // robot.on('issues.opened', async context => {
@@ -48,47 +60,73 @@ module.exports = (robot) => {
       return;
     }
 
-    const tokens = parse(context.payload.comment.body);
-    const [command, ...args] = tokens;
+    const issues = context.github.issues;
 
-    console.log('command:', command, args);
+    const tokens = parse(context.payload.comment.body);
+    const [bot, command, ...args] = tokens;
+
+    const errors = {
+        unknow: () => {
+          issues.createComment(context.issue({
+            body: `Oh, snap! I couldn't understand your request.`
+          }));
+        },
+        command: (command) => {
+          issues.createComment(context.issue({
+            body: `You don't have permission to execute this command \`${command}\``
+          }));
+        }
+        label: (label) => {
+          issues.createComment(context.issue({
+            body: `You don't have permission to use this label \`${label}\``
+          }));
+        }
+    }
+
+    console.log('command:', bot, command, args);
+
+    if(config.bot.name.toLowerCase() !== bot.toLowerCase()) {
+      errors.unknow();
+    }
 
     if (!await whiteListedUser(context)) {
-      context.github.issues.createComment(context.issue({
-        body: `Permission denied to execute command \`${command}\``
-      }));
+      errors.command(command);
       return;
     }
 
     switch (command) {
-      case '/label':
+      case 'label':
         console.log('labeling issue');
         const [operation, ...labels] = args;
+        const [label] = labels;
+
+        //change this if multiple labels commands become necessary
+        if(!isWhiteListedLabel(label){
+          errors.label(label);
+        })
+
         switch(operation) {
           case 'add':
-            context.github.issues.addLabels(context.issue({labels}));
+            issues.addLabels(context.issue({labels:[label]}));
             break;
           case 'remove':
-          const [name] = labels;
-            context.github.issues.removeLabel(context.issue({name}));
+            issues.removeLabel(context.issue({name:label}));
             break;
           default:
-            context.github.issues.createComment(context.issue({
-              body: `Oh, snap! I couldn't understand your request.`
-            }));
+            errors.unknow();
         }
         break;
 
-      case '/close':
+      case 'close':
         console.log('closing issue');
-        context.github.issues.edit(context.issue({
+        issues.edit(context.issue({
           state: 'closed'
         }));
         break;
 
-      case '/open':
+      case 'open':
         console.log('opening issue');
-        context.github.issues.edit(context.issue({
+        issues.edit(context.issue({
           state: 'open'
         }));
         break;

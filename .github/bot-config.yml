@@ -1,3 +1,5 @@
+bot:
+  name: @rocket-cat
 whitelist:
   users:
     - ggazzo
