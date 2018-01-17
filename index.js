@@ -103,20 +103,20 @@ module.exports = (robot) => {
 				const [label] = labels;
 
 				//change this if multiple labels commands become necessary
-				if (!isWhiteListedLabel(label, context)) {
+				if (!await isWhiteListedLabel(label, context)) {
 					errors.label(label);
-				}
-
-				switch (operation) {
-					case 'add':
-						issues.addLabels(context.issue({labels:[label]}));
-						break;
-					case 'remove':
-						issues.removeLabel(context.issue({name:label}));
-						break;
-					default:
-						errors.unknow();
-				}
+				} else {
+          switch (operation) {
+          	case 'add':
+          		issues.addLabels(context.issue({labels:[label]}));
+          		break;
+          	case 'remove':
+          		issues.removeLabel(context.issue({name:label}));
+          		break;
+          	default:
+          		errors.unknow();
+          }
+        }
 				break;
 
 			case 'close':
