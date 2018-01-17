@@ -88,7 +88,9 @@ module.exports = (robot) => {
 		console.log('command:', bot, command, args);
 
 		if (config.bot.name.toLowerCase() !== bot.toLowerCase()) {
-			errors.unknow();
+      //probably a mention
+      // errors.unknow();
+      return;
 		}
 
 		if (!await whiteListedUser(context)) {

@@ -3,6 +3,7 @@ bot:
 whitelist:
   users:
     - TwizzyDizzy
+    - theorenck
   labels:
     - duplicate
     - enhancement
