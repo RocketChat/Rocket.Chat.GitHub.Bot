@@ -7,9 +7,11 @@
   "repository": "https://github.com/RocketChat/Rocket.Chat.GitHub.Bot.git",
   "scripts": {
     "start": "probot run ./index.js",
-    "test": "jest && standard"
+    "test": "jest && standard",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "eslint": "^4.15.0",
     "probot": "^3.0.0"
   },
   "devDependencies": {
