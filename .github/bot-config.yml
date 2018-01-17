@@ -2,8 +2,7 @@ bot:
   name: "@rocket-cat"
 whitelist:
   users:
-    - ggazzo
-    - theorenck
+    - TwizzyDizzy
   labels:
     - duplicate
     - enhancement
