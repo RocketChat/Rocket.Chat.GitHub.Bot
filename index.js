@@ -1,5 +1,11 @@
+let config;
+
 async function getConfig(context) {
-  return await context.config('bot-config.yml', {
+  if (config) {
+    return config;
+  }
+
+  config = await context.config('bot-config.yml', {
     bot: {
       name: '@bot'
     },
@@ -8,16 +14,20 @@ async function getConfig(context) {
       labels: []
     }
   });
+
+  return config;
 }
 
-function isWhiteListedLabel(label) {
+async function isWhiteListedLabel(label, context) {
+  await getConfig(context);
+
   return !!config.whitelist.labels.find((e) => {
     return e.toUpperCase() === label.toUpperCase();
   })
 }
 
 async function whiteListedUser(context) {
-  const config = await getConfig(context);
+  await getConfig(context);
 
   if (context.payload.comment.author_association === 'OWNER') {
     return true;
@@ -101,7 +111,7 @@ module.exports = (robot) => {
         const [label] = labels;
 
         //change this if multiple labels commands become necessary
-        if(!isWhiteListedLabel(label)) {
+        if(!isWhiteListedLabel(label, context)) {
           errors.label(label);
         };
 
