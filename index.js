@@ -75,7 +75,7 @@ module.exports = (robot) => {
           issues.createComment(context.issue({
             body: `You don't have permission to execute this command \`${command}\``
           }));
-        }
+        },
         label: (label) => {
           issues.createComment(context.issue({
             body: `You don't have permission to use this label \`${label}\``
@@ -101,9 +101,9 @@ module.exports = (robot) => {
         const [label] = labels;
 
         //change this if multiple labels commands become necessary
-        if(!isWhiteListedLabel(label){
+        if(!isWhiteListedLabel(label)) {
           errors.label(label);
-        })
+        };
 
         switch(operation) {
           case 'add':
