@@ -57,7 +57,7 @@ module.exports = (robot) => {
 	robot.on('issue_comment', async context => {
 
     //do nothing if the comment is deleted
-    if (context.payload.action === 'delete') {
+    if (context.action === 'delete') {
       return;
     }
     //do not accept commands from other bots
