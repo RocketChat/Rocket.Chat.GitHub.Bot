@@ -55,15 +55,19 @@ module.exports = (robot) => {
 	// });
 
 	robot.on('issue_comment', async context => {
-		// console.log(context.payload);
-		const config = await getConfig(context);
 
+    //do nothing if the comment is deleted
+    if (context.payload.action === 'delete') {
+      return;
+    }
+    //do not accept commands from other bots
 		if (context.payload.comment.user.type === 'Bot') {
 			return;
 		}
 
-		const issues = context.github.issues;
+    const config = await getConfig(context);
 
+		const issues = context.github.issues;
 		const tokens = parse(context.payload.comment.body);
 		const [bot, command, ...args] = tokens;
 
