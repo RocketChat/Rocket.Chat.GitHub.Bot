@@ -7,7 +7,9 @@ whitelist:
   labels:
     - duplicate
     - enhancement
-    - "help wanted"
+    - "open-for-contributions"
+    - "feature-needs-review"
+    - "feature-accepted"
     - invalid
     - question
     - wontfix
