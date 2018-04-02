@@ -7,8 +7,8 @@ whitelist:
   labels:
     - duplicate
     - enhancement
-    - "contributions: welcome"
-    - "contributions: only core team"
+    - "Contributions: welcome"
+    - "Contributions: only core team"
     - "Feature: Request"
     - "Feature: Planned"
     - "type: bug"
