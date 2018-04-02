@@ -9,8 +9,8 @@ whitelist:
     - enhancement
     - "contributions: welcome"
     - "contributions: only core team"
-    - "feature: needs review"
-    - "feature: planned"
+    - "Feature: Request"
+    - "Feature: Planned"
     - "type: bug"
     - invalid
     - question
