@@ -7,7 +7,11 @@ whitelist:
   labels:
     - duplicate
     - enhancement
-    - "help wanted"
+    - "Contributions: welcome"
+    - "Contributions: only core team"
+    - "Feature: Request"
+    - "Feature: Planned"
+    - "type: bug"
     - invalid
     - question
     - wontfix
