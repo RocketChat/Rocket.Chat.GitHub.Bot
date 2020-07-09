@@ -127,14 +127,14 @@ module.exports = (robot) => {
 
 			case 'close':
 				console.log('closing issue');
-				issues.edit(context.issue({
+				issues.update(context.issue({
 					state: 'closed'
 				}));
 				break;
 
 			case 'open':
 				console.log('opening issue');
-				issues.edit(context.issue({
+				issues.update(context.issue({
 					state: 'open'
 				}));
 				break;
