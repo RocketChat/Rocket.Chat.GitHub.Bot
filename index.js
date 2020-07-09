@@ -56,16 +56,16 @@ module.exports = (robot) => {
 
 	robot.on('issue_comment', async context => {
 
-    //do nothing if the comment is deleted
-    if (context.payload.action === 'deleted') {
-      return;
-    }
-    //do not accept commands from other bots
+		//do nothing if the comment is deleted
+		if (context.payload.action === 'deleted') {
+			return;
+		}
+		//do not accept commands from other bots
 		if (context.payload.comment.user.type === 'Bot') {
 			return;
 		}
 
-    const config = await getConfig(context);
+		const config = await getConfig(context);
 
 		const issues = context.github.issues;
 		const tokens = parse(context.payload.comment.body);
@@ -92,9 +92,9 @@ module.exports = (robot) => {
 		console.log('command:', bot, command, args);
 
 		if (config.bot.name.toLowerCase() !== bot.toLowerCase()) {
-      //probably a mention
-      // errors.unknow();
-      return;
+			//probably a mention
+			// errors.unknow();
+			return;
 		}
 
 		if (!await whiteListedUser(context)) {
@@ -112,17 +112,17 @@ module.exports = (robot) => {
 				if (!await isWhiteListedLabel(label, context)) {
 					errors.label(label);
 				} else {
-          switch (operation) {
-          	case 'add':
-          		issues.addLabels(context.issue({labels:[label]}));
-          		break;
-          	case 'remove':
-          		issues.removeLabel(context.issue({name:label}));
-          		break;
-          	default:
-          		errors.unknow();
-          }
-        }
+					switch (operation) {
+						case 'add':
+							issues.addLabels(context.issue({labels:[label]}));
+							break;
+						case 'remove':
+							issues.removeLabel(context.issue({name:label}));
+							break;
+						default:
+							errors.unknow();
+					}
+				}
 				break;
 
 			case 'close':
